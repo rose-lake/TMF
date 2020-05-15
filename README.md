@@ -1,4 +1,4 @@
-# TMF Sample Site -- With Extensions
+# TMF Sample Site
 
 This is a sample full stack web app written in Python, using the Django framework. This was mostly written in February 2020, with a few additional features or tweaks added on later.
 
