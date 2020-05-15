@@ -46,7 +46,7 @@ $ python3 manage.py runserver
 ```
 
 ## 6. Go interact with the app!
-Point your web browser at '127.0.0.1:8000/' or 'localhost:8000'.
+Point your web browser at `127.0.0.1:8000/` or `localhost:8000`.
 
 ## 7. Exit
 To exit the virtual environment when you're done, simply type `deactivate` all by itself
