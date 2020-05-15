@@ -1,6 +1,8 @@
 # TMF Sample Site -- With Extensions
 
-Hello! Thanks for reading my README!
+This is a sample full stack web app written in Python, using the Django framework. This was mostly written in February 2020, with a few additional features or tweaks added on later.
+
+I was given a basic overall template layout and the JSON data files, and wrote all the rest -- the back-end code, dynamic integration of the object-structure to the front-end, user comments, selecting relevant quotes and padding these out with random ones to a total of eight, reverse engineering API calls to the TMF image server, etc. This app features functional testing via Selenium. Django's logging feature is also implemented throughout.
 
 # Pre-Requisites
 Python 3 and pip
@@ -48,15 +50,3 @@ Point your web browser at '127.0.0.1:8000/' or 'localhost:8000'.
 
 ## 7. Exit
 To exit the virtual environment when you're done, simply type `deactivate` all by itself
-
-# Additional options, and some details on the project
-- When you run the project, none of the Articles will have any attached comments yet. Please add some as you browse the app!
-- I did not implement the "relevant" quotes per article, but simply load three random quotes. To have a better feel for the shuffling functionality, please feel free to uncomment the relevant code block in views.py's article_detail method.
-```
-    # # uncomment this code block to get a larger sampling of quotes for the article
-    # # get a larger number of random quotes for testing the shuffle:
-    # quotes = get_random_quotes(10)
-```
-You could also comment out the code block just above, but it's not strictly necessary.
-
-Enjoy! and thanks for reading.
