@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <title>{% block title %}{% endblock %}</title>
+
+        <!-- Bootstrap, Fontawesome, etc -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+        <link rel="icon" type="image/png" href="{% static 'TMF/images/favicon.png' %}">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+                rel="stylesheet"
+                integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+                crossorigin="anonymous">
+        <!-- <link href="{% static 'TMF/css/bootstrap.min.css' %}" rel="stylesheet"> -->
+        <link href="{% static 'TMF/css/font-awesome.min.css' %}" rel="stylesheet">
+
+        <!-- local CSS -->
+        <link href="{% static 'TMF/css/style.css' %}" rel="stylesheet" type="text/css">
+
+    </head>
+    <body>
+    <section class="container top-bar article-top-bar">
+        <div class="d-flex flex-wrap">
+            {% block parent_link %}{% endblock %}
+            <a href="https://www.fool.com/investing/top-stocks-to-buy.aspx" class="btn">Top Stocks</a>
+            <a href="https://www.fool.com/investing/your-definitive-dividend-investing-guide.aspx" class="btn">Dividends</a>
+            <a href="https://www.fool.com/how-to-invest/stocks.aspx" class="btn">How To Invest</a>
+            <!-- was having trouble getting the section to be fully responsive, so trimmed down the content for looks. -->
+            <!-- <a href="https://www.fool.com/investing/warren-buffett-stocks-investing-advice.aspx" class="btn">Warren Buffett</a> -->
+            <!-- <a href="https://www.fool.com/earnings-call-transcripts/" class="btn">Earnings Transcripts</a> -->
+            <a href="https://www.fool.com/marijuana-stocks/" class="btn">Marijuana Stocks</a>
+        </div>
+    </section>
+        {% block content %}
+        {% endblock %}
+        <script src="{% static 'TMF/js/jquery-3.1.1.min.js' %}"></script>
+        <script src="{% static 'TMF/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'TMF/js/main.js' %}"></script>
+    </body>
+</html>

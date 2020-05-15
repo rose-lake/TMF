@@ -1,0 +1,139 @@
+{% extends 'TMF/base.html' %}
+{% load tmf_extras %}
+{% block title%}Article Detail{% endblock %}
+<!-- for article page, parent link goes back to the app's landing page: -->
+{% block parent_link %}
+<a href="{% url 'home' %}" class="btn">Back to Articles</a>
+{% endblock %}
+{% block content %}
+<main data-page="article-detail">
+    <article class="container article-content-inner">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="article-header">
+                    <header>
+                        <h1>{{ article.headline }}</h1>
+                        <h2>{{ article.promo }}</h2>
+                    </header>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <section class="col-sm-7 col-md-8">
+                <div class="author-tagline author-inline">
+                    <div class="author-and-date">
+                        {% for author in article.authors.all %}
+                        <div class="author-byline">
+                            <div class="author-name">{{author.byline}}</div>
+                            <div class="author-username">({{ author.username }})</div>
+                        </div>
+                        {% endfor %}
+                        <div class="article-pub-date">
+                            <div class="publication-date">
+                                Updated: {{article.modified.date|date:'M j, Y'}} at {{article.modified.time|date:'fA'}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <section class="article-body">
+                    <div class="article-content">
+                        {% autoescape off %}
+                        {% render_as_template article.body_extras %}
+                        {% endautoescape %}
+                    </div>
+                    <div class="article-disclosure">
+                        {% autoescape off %}
+                        {{ article.disclosure | linebreaksbr }}
+                        {% endautoescape %}
+                    </div>
+                </section>
+            </section>
+            <aside class="col-sm-5 col-md-4 p-l">
+                <section class="related-tickers">
+                    <div class="block-title">
+                        <hr>
+                        <h2>Stocks</h2>
+                    </div>
+                    <div class="my-quotes">
+                        {% for quote in quotes %}
+                        <div class="ticker-row">
+                            <div>
+                                <span class="image-wrap">
+                                    <!-- IMAGE -->
+                                    <a href="{{quote.detail_url}}" class="quote-image">
+                                        <h5 {% if quote.image_url != "" %} style="display: none;" {% endif %}>
+                                            {{quote.symbol}}
+                                        </h5>
+                                        <img {% if quote.image_url == "" %} style="display: none;" {% endif %} alt="{{quote.company_name}} Stock Quote" class="img-fluid" src="{{quote.image_url}}">
+                                    </a>
+                                </span>
+                                <h3>{{quote.company_name}}</h3>
+                                <h4>
+                                    <span class="ticker">
+                                        <!-- Link to Fool's Quote DETAIL page  -->
+                                        <a title="{{quote.industry}}, {{quote.sector}}" href="{{quote.detail_url}}">
+                                            {{quote.exchange}}:<span class="symbol">{{quote.symbol}}</span>
+                                        </a>
+                                    </span>
+                                </h4>
+                                <aside class="price-quote-container">
+                                    <!-- CURRENT PRICE -->
+                                    <!-- NOTE: all currencies in this demo are dollar, so we'll just hard-code that in -->
+                                    <h4 class="current-price">
+                                        ${{quote.current_price}}
+                                    </h4>
+                                    <h4 {% if quote.change_dollar == 0 %} class="price-change-amount" {% elif quote.change_is_positive %} class="price-change-amount price-pos" {% else %} class="price-change-amount price-neg" {% endif %}>
+                                        ${{quote.change_dollar|stringformat:".2f" }}
+                                    </h4>
+                                    <h4 {% if quote.change_dollar == 0 %} class="price-change-amount" {% elif quote.change_is_positive %} class="price-change-amount price-pos" {% else %} class="price-change-amount price-neg" {% endif %}>
+                                        ({{quote.change_percent|stringformat:".2f" }}%)
+                                    </h4>
+                                </aside>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="justify-content-center"> <!-- took out row d-flex; broke in Firefox -->
+                        <button type="button" id="shuffle-quotes" class="btn">Shuffle Quotes</button>
+                    </div>
+                </section>
+                <section class="read-more-section">
+                    <div class="block-title">
+                        <hr>
+                        <h2>Latest Headlines</h2>
+                    </div>
+                    <ul class="two-line-list">
+                        {% for promo in promos %}
+                        <li><a href="{% url 'article_detail' pk=promo.pk %}">{{promo.headline|striptags|truncatewords:10}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </section>
+            </aside>
+            <div class="col-sm-12">
+                <hr>
+            </div>
+            <div class="col-sm-7 col-md-8">
+                <div class="article-comments">
+                    <div class="block-title">
+                        <h2>Comments</h2>
+                    </div>
+                    {% for comment in article.comments.all %}
+                    <hr>
+                    <div class="comment">
+                        <div class="d-flex justify-content-between">
+                            <strong>{{ comment.author }}</strong> <span class="date">{{ comment.created_date|date:'M j, Y' }} at {{ comment.created_date|date:'fA' }}</span>
+                        </div>
+                        <p>{{ comment.text|linebreaks }}</p>
+                    </div>
+                    {% empty %}
+                    <p>Be the first to write a comment!</p>
+                    {% endfor %}
+                    <div class="row justify-content-start">
+                        <a class="btn" href="{% url 'add_comment_to_article' pk=article.pk %}">Add comment</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</main>
+{% endblock %}

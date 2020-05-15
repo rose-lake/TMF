@@ -1,0 +1,59 @@
+{% extends 'TMF/base.html' %}
+{% load tmf_extras %}
+{% block title%}Home{% endblock %}
+<!-- for home page, parent link goes to the Fool: -->
+{% block parent_link %}
+<a href="https://www.fool.com/" class="btn">The Motley Fool</a>
+{% endblock %}
+{% block content %}
+<main data-page='home'>
+    <div class="container content-inner">
+        <div class="main-col">
+            <section class="jumbo-card card">
+                <div class="card-image">
+                    <a href="{% url 'article_detail' pk=slug_article.pk %}">
+                        <img src="{{slug_article.image_url}}" alt="{{slug_article.headline}} Image" class="img-fluid">
+                    </a>
+                </div>
+                <div class="card-elements">
+                    <div class="card-header">
+                        <a href="{% url 'article_detail' pk=slug_article.pk %}">
+                            <h3>{{ slug_article.headline }}</h3>
+                        </a>
+                        <p class="author">{% for author in slug_article.authors.all %}{% if not forloop.first %}, {% endif %}{{author.byline}}{%endfor%} | {{slug_article.modified.date|date:'M j, Y'}}</p>
+                    </div>
+                    <div class="card-copy">
+                        {% autoescape off %}
+                        {{ slug_article.body_first_p }}
+                        {% endautoescape %}
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="cards row">
+            {% for article in articles %}
+            <div class="card">
+                <div class="card-image">
+                    <a href="{% url 'article_detail' pk=article.pk %}">
+                        <img src="{{article.image_url}}" alt="{{article.headline}} Image" class="img-fluid">
+                    </a>
+                </div>
+                <div class="card-elements">
+                    <div class="card-header">
+                        <a href="{% url 'article_detail' pk=article.pk %}">
+                            <h4>{{ article.headline }}</h4>
+                        </a>
+                        <p class="author">{% for author in slug_article.authors.all %}{% if not forloop.first %}, {% endif %}{{author.byline}}{%endfor%} | {{slug_article.modified.date|date:'M j, Y'}}</p>
+                    </div>
+                    <div class="card-copy">
+                        {% autoescape off %}
+                        {{ article.body_first_p }}
+                        {% endautoescape %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'TMF/base.html' %}
+{% block title%}Add Comment{% endblock %}
+<!-- for comment page, parent link goes back to article: -->
+{% block parent_link %}
+<a href="{% url 'article_detail' pk=article.pk %}" class="btn btn-primary">Back to Article</a>
+{% endblock %}
+{% block content %}
+<main data-page='add-comment-to-article'>
+    <section class="container article-content-inner">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="comment-header">
+                    <header>
+                        <h2>Commenting on:</h2>
+                        <h1>'{{ article.headline }}'</h1>
+                    </header>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <main class="col-sm-7 col-md-8">
+                <div class="comment">
+                    <div class="card">
+                        <div class="card-image">
+                            <a href="{% url 'article_detail' pk=article.pk %}">
+                                <img src="{{article.image_url}}" alt="{{article.headline}} Image" class="img-fluid">
+                            </a>
+                        </div>
+                    </div>
+                    <form method="POST" class="comment-form">{% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-primary float-right">Post Comment</button>
+                    </form>
+                </div>
+            </main>
+        </div>
+    </section>
+</main>
+{% endblock %}
