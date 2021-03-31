@@ -1,6 +1,6 @@
 Django>=2.2.10
 requests==2.22.0
-lxml==4.5.0
+lxml==4.6.3
 beautifulsoup4==4.8.2
 logging-tree==1.8.1
 selenium==3.141.0
